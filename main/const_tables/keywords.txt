@@ -1,0 +1,5 @@
+0 int
+1 main
+2 return
+3 if
+4 else
