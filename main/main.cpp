@@ -99,6 +99,25 @@ public:
       }
    }
 
+   T* findMetaByIndex(int index) {
+      // Если индекс элемента больше, чем в таблице есть
+      if (index >= counter || index < 0) {
+         return nullptr;
+      }
+
+      T* metaPtr = nullptr;
+      for (auto& pair : data) {
+         auto& value = pair.second;       // pair<int, T>
+         if (value.first == index) {
+            metaPtr = &(value.second);
+            break;
+         }
+      }
+
+      return metaPtr;
+   }
+
+
    /// <summary>
    /// Добавляет элемент в таблицу, либо возвращает номер существующего элемента
    /// </summary>
@@ -248,5 +267,32 @@ void tablesTests() {
 
 int main() {
    setlocale(LC_ALL, "ru-RU.utf-8");
-   tablesTests();
+   //tablesTests();
+   auto varTable = VariableTable<MetaData>();
+
+   varTable.add("x");
+   varTable.add("y");
+
+   auto xMetaDataPtr = varTable.findMetaByIndex(0);
+   if (xMetaDataPtr) {
+      cout << "Элемент по индексу 0 найден\n";
+      xMetaDataPtr->type = Type::integer;
+
+   } else {
+      cout << "ОШИБОКА\n";
+   }
+
+   xMetaDataPtr = varTable.findMetaByIndex(0);
+   if (xMetaDataPtr) {
+      if (xMetaDataPtr->type == Type::integer) {
+         cout << "Тип есть integer\n";
+      }
+   }
+
+   auto noneMetaDataPtr = varTable.findMetaByIndex(2);
+   if (noneMetaDataPtr) {
+      cout << "ОШИБОКА\n";
+   } else {
+      cout << "По индексу 2 ничего не найдено\n";
+   }
 }
