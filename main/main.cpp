@@ -117,6 +117,19 @@ public:
       return metaPtr;
    }
 
+   shared_ptr<pair<string, T&>> findByIndex(int index) {
+      if (index >= counter || index < 0) {
+         return nullptr;
+      }
+
+      for (auto& pair : data) {
+         auto& value = pair.second;
+         if (value.first == index) {
+            std::pair<string, T&> elem = {pair.first, value.second};
+            return make_shared<std::pair<string, T&>>(elem);
+         }
+      }
+   }
 
    /// <summary>
    /// Добавляет элемент в таблицу, либо возвращает номер существующего элемента
@@ -267,32 +280,33 @@ void tablesTests() {
 
 int main() {
    setlocale(LC_ALL, "ru-RU.utf-8");
+
    //tablesTests();
-   auto varTable = VariableTable<MetaData>();
+   //auto varTable = VariableTable<MetaData>();
 
-   varTable.add("x");
-   varTable.add("y");
+   //varTable.add("x");
+   //varTable.add("y");
 
-   auto xMetaDataPtr = varTable.findMetaByIndex(0);
-   if (xMetaDataPtr) {
-      cout << "Элемент по индексу 0 найден\n";
-      xMetaDataPtr->type = Type::integer;
+   //auto xMetaDataPtr = varTable.findMetaByIndex(0);
+   //if (xMetaDataPtr) {
+   //   cout << "Элемент по индексу 0 найден\n";
+   //   xMetaDataPtr->type = Type::integer;
 
-   } else {
-      cout << "ОШИБОКА\n";
-   }
+   //} else {
+   //   cout << "ОШИБОКА\n";
+   //}
 
-   xMetaDataPtr = varTable.findMetaByIndex(0);
-   if (xMetaDataPtr) {
-      if (xMetaDataPtr->type == Type::integer) {
-         cout << "Тип есть integer\n";
-      }
-   }
+   //xMetaDataPtr = varTable.findMetaByIndex(0);
+   //if (xMetaDataPtr) {
+   //   if (xMetaDataPtr->type == Type::integer) {
+   //      cout << "Тип есть integer\n";
+   //   }
+   //}
 
-   auto noneMetaDataPtr = varTable.findMetaByIndex(2);
-   if (noneMetaDataPtr) {
-      cout << "ОШИБОКА\n";
-   } else {
-      cout << "По индексу 2 ничего не найдено\n";
-   }
+   //auto noneMetaDataPtr = varTable.findMetaByIndex(2);
+   //if (noneMetaDataPtr) {
+   //   cout << "ОШИБОКА\n";
+   //} else {
+   //   cout << "По индексу 2 ничего не найдено\n";
+   //}
 }
